@@ -22,13 +22,12 @@ export default function SidePanel({
         <Link href="/" className="flex items-center justify-between hover:text-lime-400">
           <span>Home</span><span className="text-lime-400">●</span>
         </Link>
-        <a href="#about" className="block hover:text-lime-400">About</a>
-        <a href="#features" className="block hover:text-lime-400">Features</a>
-        <Link href="/generate" className="block hover:text-lime-400">Generate</Link>
+        <a href="#features" className="block hover:text-indigo-300">Features</a>
+        <Link href="/generate" className="block hover:text-indigo-300">Generate</Link>
         <a
           href="https://github.com/petera-major/repolore"
           target="_blank"
-          className="block hover:text-lime-400"
+          className="block hover:text-indigo-300"
         >
           GitHub
         </a>
