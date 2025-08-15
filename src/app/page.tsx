@@ -10,14 +10,11 @@ export default function Page() {
     <main className={`${dark ? "bg-black text-zinc-100" : "bg-zinc-50 text-zinc-900"} min-h-screen relative`}>
       <SidePanel dark={dark} setDark={setDark} />
 
-      {/* top header */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <div className="font-extrabold tracking-widest text-xl">
           REPO<span className="text-purple-400">ARCHIVE</span>
         </div>
         <nav className="hidden gap-6 text-sm sm:flex">
-          <a href="#features" className="hover:text-lime-400">Features</a>
-          <a href="#about" className="hover:text-lime-400">About</a>
           <Link
             href="/generate"
             className="rounded-full border border-zinc-700 px-4 py-2 hover:border-pink-400 hover:text-teal-400"
@@ -28,15 +25,13 @@ export default function Page() {
       </header>
 
       <section className="mx-auto max-w-6xl px-6 pt-10 pb-16">
-        <p className="font-semibold tracking-wide text-violet-400">THIS IS REPOARCHIVE</p>
 
         <h1 className="mt-6 text-5xl font-black leading-[0.95] sm:text-7xl">
-          <span className="-skew-y-1 inline-block bg-lime-400 px-3 pb-1 text-black">ALMOST*</span>{" "}
           THE EASIEST WAY TO UNDERSTAND ANY GITHUB REPO
         </h1>
 
         <p className="mt-6 max-w-2xl text-zinc-300">
-          Paste a GitHub URL and instantly get dependency diagrams and plain-English summaries.
+          Paste a GitHub URL and get architecture/dependency diagrams for any public repo.
         </p>
 
         <div className="mt-8 flex gap-3">
@@ -65,8 +60,7 @@ export default function Page() {
         <h2 className="mb-4 text-2xl font-semibold">How it works</h2>
         <ol className="list-decimal space-y-2 pl-5 text-zinc-300">
           <li>Paste a public GitHub repo URL.</li>
-          <li>We fetch files, parse imports, and build a Mermaid diagram.</li>
-          <li>(Optional) Click a file to get a 1–2 sentence AI summary.</li>
+          <li>Files are fetched, imports are parsed, and diagrams are built.</li>
         </ol>
       </section>
     </main>

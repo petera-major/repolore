@@ -20,7 +20,7 @@ export default function SidePanel({
 
       <nav className="mt-3 space-y-2 text-sm">
         <Link href="/" className="flex items-center justify-between hover:text-lime-400">
-          <span>Home</span><span className="text-lime-400">●</span>
+          <span>Home</span><span className="text-purple-400">●</span>
         </Link>
         <a href="#features" className="block hover:text-indigo-300">Features</a>
         <Link href="/generate" className="block hover:text-indigo-300">Generate</Link>
