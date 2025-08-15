@@ -1,42 +1,87 @@
 "use client";
 import { useState } from "react";
-import Diagram from "./components/Diagram";
+import Link from "next/link";
+import SidePanel from "./components/SidePanel";
 
-export default function Home(){
-  const [url, setUrl] = useState("");
-  const [data, setData] = useState<{mermaid?:string; files?:number; edges?:number; error?:string}>({});
-  const [loading, setLoading] = useState(false);
-
-  async function generate(){
-    setLoading(true);
-    setData({});
-    const r = await fetch("/api/graph", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ repoUrl: url })
-    });
-    const j = await r.json();
-    setData(j);
-    setLoading(false);
-  }
+export default function Page() {
+  const [dark, setDark] = useState(true);
 
   return (
-    <main style={{ maxWidth: 880, margin: "0 auto", padding: 24 }}>
-      <h1 style={{ fontSize: 28, fontWeight: 700 }}>RepoLore (MVP with Diagrams)</h1>
-      <p style={{ opacity: 0.7, marginBottom: 12 }}>Paste a GitHub URL → dependency graph (Mermaid).</p>
-      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-        <input value={url} onChange={e=>setUrl(e.target.value)} placeholder="https://github.com/vercel/next.js" style={{ flex: 1, padding: 10, border: "1px solid #ddd", borderRadius: 8 }}/>
-        <button onClick={generate} disabled={loading} style={{ padding: "10px 14px", border: "1px solid #ddd", borderRadius: 8 }}>
-          {loading?"Working...":"Generate"}
-        </button>
-      </div>
-      {data.error && <div style={{ color: "#b91c1c", marginBottom: 8 }}>{data.error}</div>}
-      {data.mermaid && !data.error && (
-        <>
-          <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 8 }}>Files: {data.files} • Edges: {data.edges}</div>
-          <Diagram code={data.mermaid!} />
-        </>
-      )}
+    <main className={`${dark ? "bg-black text-zinc-100" : "bg-zinc-50 text-zinc-900"} min-h-screen relative`}>
+      {/* right-side mini dashboard */}
+      <SidePanel dark={dark} setDark={setDark} />
+
+      {/* top header */}
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="font-extrabold tracking-widest text-xl">
+          REPO<span className="text-lime-400">LORE</span>
+        </div>
+        <nav className="hidden gap-6 text-sm sm:flex">
+          <a href="#features" className="hover:text-lime-400">Features</a>
+          <a href="#about" className="hover:text-lime-400">About</a>
+          <Link
+            href="/generate"
+            className="rounded-full border border-zinc-700 px-4 py-2 hover:border-lime-400 hover:text-lime-400"
+          >
+            Try it
+          </Link>
+        </nav>
+      </header>
+
+      {/* hero like the pic */}
+      <section className="mx-auto max-w-6xl px-6 pt-10 pb-16">
+        <p className="font-semibold tracking-wide text-violet-400">THIS IS REPOLORE</p>
+
+        <h1 className="mt-6 text-5xl font-black leading-[0.95] sm:text-7xl">
+          <span className="-skew-y-1 inline-block bg-lime-400 px-3 pb-1 text-black">ALMOST*</span>{" "}
+          THE EASIEST WAY TO UNDERSTAND ANY GITHUB REPO
+        </h1>
+
+        <p className="mt-6 max-w-2xl text-zinc-300">
+          Paste a GitHub URL and instantly get dependency diagrams and plain-English summaries.
+        </p>
+
+        <div className="mt-8 flex gap-3">
+          <Link
+            href="/generate"
+            className="rounded-lg bg-lime-400 px-5 py-3 font-semibold text-black hover:brightness-95"
+          >
+            Generate Docs
+          </Link>
+          <a
+            href="#features"
+            className="rounded-lg border border-zinc-700 px-5 py-3 hover:border-zinc-500"
+          >
+            Learn more
+          </a>
+        </div>
+      </section>
+
+      {/* features grid */}
+      <section id="features" className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 pb-24 sm:grid-cols-3">
+        <Feature title="Paste URL" desc="Drop a GitHub link. No setup." />
+        <Feature title="Dependency diagram" desc="We scan imports and render Mermaid automatically." />
+        <Feature title="AI summaries" desc="Explain files and modules in human language." />
+      </section>
+
+      {/* about/how */}
+      <section id="about" className="mx-auto max-w-6xl px-6 pb-24">
+        <h2 className="mb-4 text-2xl font-semibold">How it works</h2>
+        <ol className="list-decimal space-y-2 pl-5 text-zinc-300">
+          <li>Paste a public GitHub repo URL.</li>
+          <li>We fetch files, parse imports, and build a Mermaid diagram.</li>
+          <li>(Optional) Click a file to get a 1–2 sentence AI summary.</li>
+        </ol>
+      </section>
     </main>
+  );
+}
+
+function Feature({ title, desc }: { title: string; desc: string }) {
+  return (
+    <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+      <h3 className="font-semibold">{title}</h3>
+      <p className="mt-2 text-sm text-zinc-300">{desc}</p>
+    </div>
   );
 }
