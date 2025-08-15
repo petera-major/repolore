@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";             // ← add this
 import Diagram from "../components/Diagram";
 
 type SampleFile = { path: string; url: string };
@@ -26,19 +27,19 @@ export default function GeneratePage() {
   return (
     <main className="min-h-screen bg-black text-zinc-100 px-6 py-10">
       <div className="max-w-5xl mx-auto">
-        <a href="/" className="text-sm underline opacity-80 hover:opacity-100">← Back</a>
+        <Link href="/" className="text-sm underline opacity-80 hover:opacity-100">← Back</Link>
 
         <div className="mt-6 flex gap-2">
           <input
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://github.com/owner/repo"
-            className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 outline-none focus:border-pink-400"
+            className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 outline-none focus:border-lime-400"
           />
           <button
             onClick={generate}
             disabled={loading}
-            className="rounded-lg bg-teal-400 text-black font-semibold px-4 py-2 disabled:opacity-60"
+            className="rounded-lg bg-lime-400 text-black font-semibold px-4 py-2 disabled:opacity-60"
           >
             {loading ? "Working..." : "Generate"}
           </button>
