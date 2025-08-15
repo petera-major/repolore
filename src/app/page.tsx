@@ -8,7 +8,6 @@ export default function Page() {
 
   return (
     <main className={`${dark ? "bg-black text-zinc-100" : "bg-zinc-50 text-zinc-900"} min-h-screen relative`}>
-      {/* right-side mini dashboard */}
       <SidePanel dark={dark} setDark={setDark} />
 
       {/* top header */}
