@@ -15,10 +15,7 @@ export default function Page() {
           REPO<span className="text-purple-400">ARCHIVE</span>
         </div>
         <nav className="hidden gap-6 text-sm sm:flex">
-          <Link
-            href="/generate"
-            className="rounded-full border border-zinc-700 px-4 py-2 hover:border-pink-400 hover:text-teal-400"
-          >
+          <Link href="/generate" className="rounded-full border border-zinc-700 px-4 py-2 hover:border-pink-400 hover:text-teal-400">
             Try it
           </Link>
         </nav>
@@ -41,12 +38,9 @@ export default function Page() {
           >
             Generate Docs
           </Link>
-          <a
-            href="#features"
+          <a href="#features"
             className="rounded-lg border border-zinc-700 px-5 py-3 hover:border-zinc-500"
-          >
-            Learn more
-          </a>
+          > Learn more</a>
         </div>
       </section>
 
