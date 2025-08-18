@@ -135,7 +135,6 @@ Tech stack (inferred from package.json deps): ${techStack.join(", ") || "unknown
 Include sections:
 1) Title + one-line pitch
 2) Features (bullet list)
-3) Architecture (include the Mermaid graph as a fenced \`\`\`mermaid block)
 4) Tech Stack (bulleted)
 5) Getting Started (clone, install, dev)
 6) Usage (how to paste a GitHub URL and generate diagram)
@@ -145,17 +144,13 @@ Include sections:
 
 Use concise, friendly language. Keep code fences valid.
 Mermaid to embed:
-
-\`\`\`mermaid
-${mermaid}
-\`\`\`
 `;
 
     const resp = await client.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.25,
       messages: [
-        { role: "system", content: "You are a meticulous technical writer who crafts clear, helpful READMEs." },
+        { role: "system", content: "You are a technical writer who crafts clear, helpful READMEs." },
         { role: "user", content: prompt },
       ],
     });
