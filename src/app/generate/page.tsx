@@ -7,10 +7,10 @@ type SampleFile = { path: string; url: string };
 type Data = { mermaid?: string; files?: number; edges?: number; error?: string; sampleFiles?: SampleFile[] };
 
 export default function GeneratePage() {
-  const [url, setUrl] = useState("");
-  const [data, setData] = useState<Data>({});
-  const [loading, setLoading] = useState(false);
-  const [readme, setReadme] = useState<string>("");
+    const [url, setUrl] = useState("");
+    const [data, setData] = useState<Data>({});
+    const [loading, setLoading] = useState(false);
+    const [readme, setReadme] = useState<string>("");
     const [stack, setStack] = useState<string[]>([]);
     const [making, setMaking] = useState(false);
 
@@ -103,16 +103,27 @@ export default function GeneratePage() {
       </div>
 
         <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
-        <h3 className="text-lg font-semibold">Tech Stack (inferred)</h3>
+        <h3 className="text-lg font-semibold">Tech Stack (inferred)</h3> 
         {stack?.length ? (
             <ul className="mt-2 list-disc pl-5 text-sm text-zinc-300">
             {stack.map((s) => <li key={s}>{s}</li>)}
-            </ul>
-            ) : ( <p className="mt-2 text-sm text-zinc-400">Will appear after README is generated.</p>)}
-            <p className="mt-3 text-xs text-zinc-500"> Detected from <code>package.json</code>. You can edit the README before committing. </p>
+            </ul> 
+        ) : ( 
+        <p className="mt-2 text-sm text-zinc-400">Will appear after README is generated.</p>)}
+        <p className="mt-3 text-xs text-zinc-500"> Detected from <code>package.json</code>. You can edit the README before committing. </p>
         </div>
-    </div>
+        </div>
     )}
+
+    {data.mermaid && !data.error && (
+        <div className="mt-10 rounded-2xl border border-zinc-800 bg-zinc-900/40 p-4">
+            <h3 className="text-lg font-semibold mb-4">Architecture Diagram</h3>
+            <div className="overflow-x-auto">
+            <Diagram code={data.mermaid} />
+            </div>
+        </div>
+    )}
+
     </div>
     </main>
   );
