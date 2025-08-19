@@ -46,15 +46,15 @@ export default function Page() {
 
       <section id="features" className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 pb-24 sm:grid-cols-3">
         <Feature title="Paste URL" desc="Drop a GitHub link. No setup." />
-        <Feature title="Dependency diagram" desc="We scan imports and render Mermaid automatically." />
-        <Feature title="AI summaries" desc="Explain files and modules in human language." />
+        <Feature title="What occurs" desc="Automatically webscrapes public repositories to generate clean README files and Mermaid architecture diagrams." />
+        <Feature title="Summaries" desc="Turns complex files and modules into simple, readable explanations." />
       </section>
 
       <section id="about" className="mx-auto max-w-6xl px-6 pb-24">
         <h2 className="mb-4 text-2xl font-semibold">How it works</h2>
         <ol className="list-decimal space-y-2 pl-5 text-zinc-300">
           <li>Paste a public GitHub repo URL.</li>
-          <li>Files are fetched, imports are parsed, and diagrams are built.</li>
+          <li>Input a GitHub repo URL, and the tool automatically fetches files, parses imports, and creates architecture diagrams.</li>
         </ol>
       </section>
     </main>

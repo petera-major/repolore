@@ -69,8 +69,7 @@ export default function GeneratePage() {
           <button
             onClick={generate}
             disabled={loading}
-            className="rounded-lg bg-indigo-400 text-black font-semibold px-4 py-2 disabled:opacity-60"
-          >
+            className="rounded-lg bg-indigo-400 text-black font-semibold px-4 py-2 disabled:opacity-60">
             {loading ? "Working..." : "Generate"}
           </button>
         </div>
@@ -96,9 +95,9 @@ export default function GeneratePage() {
 
       <div className="mt-3 flex gap-2">
         <button onClick={copyReadme} disabled={!readme}
-          className="rounded-md border border-zinc-700 px-3 py-2 text-sm hover:border-lime-400 disabled:opacity-60">Copy</button>
+        className="rounded-md border border-zinc-700 px-3 py-2 text-sm hover:border-lime-400 disabled:opacity-60">Copy</button>
         <button onClick={downloadReadme} disabled={!readme}
-          className="rounded-md border border-zinc-700 px-3 py-2 text-sm hover:border-lime-400 disabled:opacity-60">Download README.md</button>
+        className="rounded-md border border-zinc-700 px-3 py-2 text-sm hover:border-lime-400 disabled:opacity-60">Download README.md</button>
       </div>
       </div>
 
