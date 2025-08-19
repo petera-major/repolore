@@ -28,7 +28,7 @@ export default function Page() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-zinc-300">
-          Paste a GitHub URL and get architecture/dependency diagrams for any public repo.
+          Paste a GitHub URL and get README and an architecture diagram for any public repo.
         </p>
 
         <div className="mt-8 flex gap-3">
