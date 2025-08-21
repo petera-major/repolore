@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# repolore
+A powerful tool for visualizing and summarizing GitHub repositories with ease.
+
+## Features
+- Generate diagrams from GitHub repository data using Mermaid.
+- Summarize repository information with OpenAI integration.
+- Intuitive user interface built with React and Tailwind CSS.
+- TypeScript for enhanced code quality and maintainability.
+- Linting with ESLint for consistent code style.
+
+## Tech Stack
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Mermaid
+- OpenAI API
+- ESLint
+
+You can check out the live website at [RepoArchive]((https://repolore.vercel.app))
+
 
 ## Getting Started
 
-First, run the development server:
+To get started with `repolore`, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/petera-major/repolore.git
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Navigate into the project directory:**
+   ```bash
+   cd repolore
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Install the dependencies:**
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
-## Learn More
+5. **Open your browser and visit:**
+   ```
+   http://localhost:3000
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+## Usage
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To generate a diagram from a GitHub repository:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Copy the URL of the GitHub repository you want to visualize.
+2. Paste the URL into the input field on the application.
+3. Click the "Generate Diagram" button to create the visualization.
 
-## Deploy on Vercel
+## API Endpoints
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### `/api/graph`
+- **Method:** POST
+- **Description:** Generates a diagram based on the provided GitHub repository URL.
+- **Request Body:**
+  ```json
+  {
+    "url": "https://github.com/user/repo"
+  }
+  ```
+
+### `/api/summarize`
+- **Method:** POST
+- **Description:** Summarizes the repository information using OpenAI.
+- **Request Body:**
+  ```json
+  {
+    "url": "https://github.com/user/repo"
+  }
+  ```
+
+## Roadmap
+- [ ] Add support for additional diagram types.
+- [ ] Implement user authentication for personalized features.
+- [ ] Enhance the UI with more customization options.
+- [ ] Expand API capabilities for more detailed summaries.
+
+
+
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
