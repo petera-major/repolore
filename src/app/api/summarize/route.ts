@@ -19,9 +19,9 @@ export async function POST(req: NextRequest) {
         {
           role: "user",
           content: `Summarize this file in <=120 words. Include purpose, key exports, and how it fits the app.
-PATH: ${path}
-CODE:
-${code}`,
+          PATH: ${path}
+          CODE:
+          ${code}`,
         },
       ],
     });

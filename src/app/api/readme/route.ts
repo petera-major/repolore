@@ -30,10 +30,9 @@ async function gh<T>(path: string, token?: string): Promise<T> {
 
 const IMPORT_RE =
   /import\s+(?:[^'"`]+?from\s+)?['"]([^'"`]+)['"];?|require\(['"]([^'"`]+)['"]\)/g;
-
-function id(p: string) { return p.replace(/[^a-zA-Z0-9_]/g, "_"); }
-function normalizePath(p: string) { return p.replace(/\\/g, "/"); }
-function resolveRelative(from: string, dep: string) {
+  function id(p: string) { return p.replace(/[^a-zA-Z0-9_]/g, "_"); }
+  function normalizePath(p: string) { return p.replace(/\\/g, "/"); }
+  function resolveRelative(from: string, dep: string) {
   const base = from.split("/").slice(0, -1).join("/");
   const parts = (base + "/" + dep).split("/");
   const stack: string[] = [];
@@ -70,6 +69,7 @@ export async function POST(req: NextRequest) {
         deps = { ...(pkg.dependencies ?? {}), ...(pkg.devDependencies ?? {}) };
       }
     }
+
     const techFlags = {
       next: !!deps["next"],
       react: !!deps["react"],
@@ -79,9 +79,8 @@ export async function POST(req: NextRequest) {
       openai: !!deps["openai"],
       eslint: !!deps["eslint"],
     };
-    const techStack = Object.entries(techFlags)
-      .filter(([, v]) => v)
-      .map(([k]) => k);
+
+    const techStack = Object.entries(techFlags).filter(([, v]) => v).map(([k]) => k);
 
     // build dependency graph
     const files = items
@@ -91,6 +90,28 @@ export async function POST(req: NextRequest) {
         url: `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${n.path}`,
       }));
     const subset = files.slice(0, Math.min(files.length, 60));
+
+    const fileSummaries: string[] = [];
+
+    await Promise.all(
+    subset.map(async (f) => {
+        const r = await fetch(f.url);
+        if (!r.ok) return;
+        const code = await r.text();
+        
+        // parse dependencies for mermaid
+        let m: RegExpExecArray | null;
+        while ((m = IMPORT_RE.exec(code))) {
+        const dep = (m[1] || m[2])?.trim();
+        if (dep && dep.startsWith(".")) {
+            const to = normalizePath(resolveRelative(f.path, dep));
+            edges.push({ from: normalizePath(f.path), to });
+        }
+        }
+
+        fileSummaries.push(`### ${f.path}\n\`\`\`\n${code.slice(0, 600)}\n\`\`\`\n`);
+    })
+    );
 
     const edges: Array<{ from: string; to: string }> = [];
     await Promise.all(
@@ -121,30 +142,37 @@ export async function POST(req: NextRequest) {
 
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const prompt = `
-    Create a high-quality README.md for this GitHub repo.
+    Create a high-quality README.md for this GitHub repo by analyzing the code samples below.
+
+    DO NOT copy or rely on an existing README. Instead, infer the purpose, features, usage, and structure from the actual code.
 
     Repo:
     - name: ${meta.name}
     - full_name: ${meta.full_name}
     - url: ${meta.html_url}
-    - description: ${meta.description ?? "n/a"}
     - license: ${meta.license?.spdx_id ?? "UNLICENSED"}
+    - Tech stack: ${techStack.join(", ") || "unknown"}
 
-    Tech stack (inferred from package.json deps): ${techStack.join(", ") || "unknown"}
+    Below are code snippets from the repo files. Use them to infer features and behavior:
+    ${fileSummaries.join("\n\n")}
 
-    Include sections:
-    1) Title + one-line pitch
-    2) Features (bullet list)
-    4) Tech Stack (bulleted)
-    5) Getting Started (clone, install, dev)
-    6) Usage (how to paste a GitHub URL and generate diagram)
-    7) API Endpoints (/api/graph, /api/summarize if present)
-    8) Roadmap
-    9) License
+    Here is the repo’s architecture in Mermaid:
+    \`\`\`mermaid
+    ${mermaid}
+    \`\`\`
 
-    Use concise, friendly language. Keep code fences valid.
-    Mermaid to embed:
+    Structure the README like:
+    1. Title + one-line pitch
+    2. Features (bullet list)
+    3. Architecture
+    4. Tech Stack
+    5. Getting Started
+    6. Usage
+    7. API Endpoints
+    8. Roadmap
+    9. License
     `;
+
 
     const resp = await client.chat.completions.create({
       model: "gpt-4o-mini",
