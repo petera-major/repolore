@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     const { owner, repo } = parseRepoUrl(repoUrl);
     const token = process.env.GITHUB_TOKEN;
 
-    // 1) list files at HEAD
+    // list files 
     const tree = await gh<GitTreeResponse>(
       `/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`,
       token
@@ -44,10 +44,9 @@ export async function POST(req: NextRequest) {
         url: `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${n.path}`,
       }));
 
-    // 2) cap for speed
     const subset = files.slice(0, Math.min(files.length, 60));
 
-    // 3) scan imports → edges
+    // scan imports 
     const edges: Array<{ from: string; to: string }> = [];
     await Promise.all(
       subset.map(async (f) => {
@@ -65,7 +64,6 @@ export async function POST(req: NextRequest) {
       })
     );
 
-    // 4) Mermaid graph
     const nodes = new Set<string>();
     for (const e of edges) {
       nodes.add(e.from);
