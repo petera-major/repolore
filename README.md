@@ -55,7 +55,3 @@ To generate a diagram from a GitHub repository:
 - [ ] Enhance the UI with more customization options.
 - [ ] Expand API capabilities for more detailed summaries.
 
-
-
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
